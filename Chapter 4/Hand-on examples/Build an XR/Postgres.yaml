@@ -1,0 +1,75 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: postgres
+  labels:
+    # An optional label used for easy discovery
+    crossplane.io/xrd: xgcpdbs.alpha-beta.imarunrk.com
+spec:
+  # Refer to an XRD API version
+  compositeTypeRef:
+    apiVersion: alpha-beta.imarunrk.com/v1
+    kind: XGCPdb
+  writeConnectionSecretsToNamespace: crossplane-system
+  resources:
+    # Provide configuration for Postgres resource
+  - name: cloudsqlinstance
+    base:
+      apiVersion: database.gcp.crossplane.io/v1beta1
+      kind: CloudSQLInstance
+      spec:
+        # reference to GCP credentials
+        providerConfigRef:
+          name: gcp-credentials-project-1
+        forProvider:
+          databaseVersion: POSTGRES_9_6
+          # Complience Policy
+          region: us-central1
+          settings:
+            # These are default values 
+            # We will patch this to match architecture policy 
+            tier: db-g1-small
+            dataDiskSizeGb: 20
+    patches:
+      # Patch tier in composition from XR/Claim 
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.size
+      toFieldPath: spec.forProvider.settings.tier
+      # Use map transform
+      # If the from-field value is BIG, then 
+      # the mapped to-field value is db-n1-standard-1
+      transforms:
+      - type: map
+        map:
+          BIG: db-n1-standard-1
+          SMALL: db-g1-small
+      policy:
+        # return error if there is no field.
+        fromFieldPath: Required
+      # Patch disk size in composition from XR/Claim 
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.size
+      toFieldPath: spec.forProvider.settings.dataDiskSizeGb
+      # If the from-field value is BIG, then 
+      # the mapped to-field value is '40;
+      # Apply the second transform to convert '40' to int
+      transforms:
+      - type: map
+        map:
+          BIG: "40"
+          SMALL: "20"
+      - type: convert
+        convert:
+          toType: int
+      policy:
+        # return error if there is no field.
+        fromFieldPath: Required
+    # Patch zone information back to the XR status
+    # No transformation or policy required
+    - type: ToCompositeFieldPath
+      fromFieldPath: status.atProvider.gceZone
+      toFieldPath: status.zone
+    # Propagating CloudSQLInstance connection secret to the XR
+    connectionDetails:
+    - name: hostname
+      fromConnectionSecretKey: hostname

@@ -1,0 +1,40 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  #'<plural>.<group>'
+  name: xclouddbs.book.imarunrk.com
+spec:
+  # API group
+  group: book.imarunrk.com
+  # Singular name and plural name.
+  names:
+    kind: xclouddb
+    plural: xclouddbs
+  # Optional parameter to create namespace proxy claim API
+  claimNames:
+    kind: Clouddb
+    plural: Clouddbs
+  # Start from alpha to beta to production to deprecated.
+  versions:
+  - name: v1
+    # Is the specific version actively served
+    served: true
+    # Can the version be referenced from an API implementation
+    referenceable: true
+    # OpenAPI schema 
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  storageSize:
+                    type: integer
+                required:
+                - storageSize
+            required:
+            - parameters

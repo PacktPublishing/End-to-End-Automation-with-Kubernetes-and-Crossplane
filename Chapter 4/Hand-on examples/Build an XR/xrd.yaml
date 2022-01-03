@@ -1,0 +1,48 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  #'<plural name>.<group>'
+  name: xgcpdbs.alpha-beta.imarunrk.com
+spec:
+  # We will group the APIs under the alpha-beta group 
+  group: alpha-beta.imarunrk.com
+  # Singular name and plural name of GCP DB.
+  names:
+    kind: XGCPdb
+    plural: xgcpdbs
+  # Providing the claim API name for the product team
+  claimNames:
+    kind: GCPdb
+    plural: gcpdbs
+  # We will start with version v1 for the first release.
+  versions:
+  - name: v1
+    # This is an actively served version
+    served: true
+    # We should be able to create composition for this version 
+    referenceable: true
+    # OpenAPI schema 
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              # Environment name will be a user input
+              parameters:
+                type: object
+                properties:
+                  size:
+                    type: string
+                required:
+                - size
+            required:
+            - parameters
+          status:
+            type: object
+            # Current disk size status patch parameter.
+            properties:
+              zone:
+                description: DB zone.
+                type: string

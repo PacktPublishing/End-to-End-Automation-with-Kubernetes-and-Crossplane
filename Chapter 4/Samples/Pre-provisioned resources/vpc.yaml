@@ -1,0 +1,16 @@
+apiVersion: compute.gcp.crossplane.io/v1beta1
+kind: Network
+metadata:
+  name: default-vpc-crossplane-ref
+  # Label to refer the VPC using label selector
+  labels:
+    team: alpha-beta
+  annotations:
+    # Annotation to provide existing resource named
+    crossplane.io/external-name: default
+spec:
+  providerConfigRef:
+    name: gcp-credentials-project-1
+  # Provide the required parameters same as external resource.
+  forProvider:
+    autoCreateSubnetworks: true
