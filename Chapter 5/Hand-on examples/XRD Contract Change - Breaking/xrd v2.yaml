@@ -1,0 +1,55 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xmysqls.xrd-non-breaking.imarunrk.com
+spec:
+  group: xrd-non-breaking.imarunrk.com
+  names:
+    kind: XMySql
+    plural: xmysqls
+  claimNames:
+    kind: MySql
+    plural: mysqls
+  versions:
+  - name: v1
+    served: true
+    referenceable: false
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  size:
+                    type: integer
+                  region:
+                    type: string
+                required:
+                - size
+            required:
+            - parameters
+  - name: v1.1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  size:
+                    type: integer
+                  region:
+                    type: string
+                required:
+                - size
+            required:
+            - parameters

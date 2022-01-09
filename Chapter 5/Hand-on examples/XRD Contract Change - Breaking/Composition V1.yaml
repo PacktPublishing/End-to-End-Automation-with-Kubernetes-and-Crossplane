@@ -1,0 +1,26 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: gcp-mysql
+spec:
+  compositeTypeRef:
+    apiVersion: xrd-non-breaking.imarunrk.com/v1
+    kind: XMySql
+  resources:
+  - name: cloudsqlinstance
+    base:
+      apiVersion: database.gcp.crossplane.io/v1beta1
+      kind: CloudSQLInstance
+      spec:
+        providerConfigRef:
+          name: gcp-credentials-project-1
+        forProvider:
+          region: us-central1
+          databaseVersion: MYSQL_5_7
+          settings:
+            tier: db-g1-small
+            dataDiskSizeGb: 40
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.size
+      toFieldPath: spec.forProvider.settings.dataDiskSizeGb
