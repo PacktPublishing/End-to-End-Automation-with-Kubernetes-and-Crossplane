@@ -13,27 +13,6 @@ spec:
   versions:
   - name: v1
     served: true
-    referenceable: false
-    schema:
-      openAPIV3Schema:
-        type: object
-        properties:
-          spec:
-            type: object
-            properties:
-              parameters:
-                type: object
-                properties:
-                  size:
-                    type: integer
-                  region:
-                    type: string
-                required:
-                - size
-            required:
-            - parameters
-  - name: v1.1
-    served: true
     referenceable: true
     schema:
       openAPIV3Schema:
@@ -47,9 +26,9 @@ spec:
                 properties:
                   size:
                     type: integer
-                  region:
+                  vm:
                     type: string
                 required:
-                - size
+                - vm
             required:
             - parameters

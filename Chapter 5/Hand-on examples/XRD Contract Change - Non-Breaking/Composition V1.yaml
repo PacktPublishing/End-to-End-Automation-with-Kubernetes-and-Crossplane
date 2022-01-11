@@ -22,5 +22,5 @@ spec:
             dataDiskSizeGb: 40
     patches:
     - type: FromCompositeFieldPath
-      fromFieldPath: spec.parameters.size
-      toFieldPath: spec.forProvider.settings.dataDiskSizeGb
+      fromFieldPath: spec.parameters.vm
+      toFieldPath: spec.forProvider.settings.tier

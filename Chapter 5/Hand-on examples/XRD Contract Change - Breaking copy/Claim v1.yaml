@@ -7,4 +7,4 @@ spec:
   compositionRef:
     name: gcp-mysql
   parameters:
-    size: 10
+    vm: db-n1-standard-1

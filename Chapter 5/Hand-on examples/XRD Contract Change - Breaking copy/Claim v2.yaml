@@ -1,4 +1,4 @@
-apiVersion: xrd-non-breaking.imarunrk.com/v1.1
+apiVersion: xrd-non-breaking.imarunrk.com/v1
 kind: MySql
 metadata:
   namespace: alpha
@@ -8,4 +8,4 @@ spec:
     name: gcp-mysql
   parameters:
     size: 10
-    region: us-west1
+    vm: db-n1-standard-2
