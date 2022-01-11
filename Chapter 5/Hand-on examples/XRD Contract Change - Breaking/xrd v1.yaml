@@ -1,9 +1,9 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xmysqls.xrd-non-breaking.imarunrk.com
+  name: xmysqls.xrd-breaking.imarunrk.com
 spec:
-  group: xrd-non-breaking.imarunrk.com
+  group: xrd-breaking.imarunrk.com
   names:
     kind: XMySql
     plural: xmysqls

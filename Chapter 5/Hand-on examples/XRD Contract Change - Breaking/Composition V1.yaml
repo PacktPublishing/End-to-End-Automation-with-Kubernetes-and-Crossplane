@@ -4,14 +4,18 @@ metadata:
   name: gcp-mysql
 spec:
   compositeTypeRef:
-    apiVersion: xrd-non-breaking.imarunrk.com/v1
+    apiVersion: xrd-breaking.imarunrk.com/v1
     kind: XMySql
   resources:
   - name: cloudsqlinstance
     base:
       apiVersion: database.gcp.crossplane.io/v1beta1
       kind: CloudSQLInstance
+      metadata:
+        annotations:
+          crossplane.io/external-name: default
       spec:
+        deletionPolicy: Orphan
         providerConfigRef:
           name: gcp-credentials-project-1
         forProvider:
@@ -22,5 +26,15 @@ spec:
             dataDiskSizeGb: 40
     patches:
     - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.size
+      toFieldPath: spec.forProvider.settings.dataDiskSizeGb
+    - type: FromCompositeFieldPath
       fromFieldPath: spec.parameters.vm
       toFieldPath: spec.forProvider.settings.tier
+    - type: FromCompositeFieldPath
+      fromFieldPath: metadata.labels[claim.name]
+      toFieldPath: metadata.annotations[crossplane.io/external-name]
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-gcp-mysql-cloudsqlinstance"
