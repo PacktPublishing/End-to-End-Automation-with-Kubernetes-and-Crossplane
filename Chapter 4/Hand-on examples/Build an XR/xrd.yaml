@@ -29,7 +29,7 @@ spec:
           spec:
             type: object
             properties:
-              # Environment name will be a user input
+              # Size will be a user input
               parameters:
                 type: object
                 properties:
