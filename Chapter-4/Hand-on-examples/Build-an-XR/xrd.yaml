@@ -41,7 +41,7 @@ spec:
             - parameters
           status:
             type: object
-            # Current disk size status patch parameter.
+            # Recourse zone - status patch parameter.
             properties:
               zone:
                 description: DB zone.
