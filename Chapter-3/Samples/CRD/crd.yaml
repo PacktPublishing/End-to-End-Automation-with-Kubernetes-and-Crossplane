@@ -7,19 +7,19 @@ spec:
   version: "v1"
   scope: "Namespaced"
   names:
-    plural: " clouddbs"
+    plural: "clouddbs"
     singular: "clouddb"
     kind: "CloudDB"
   validation:
     openAPIV3Schema:
       required: ["spec"]
-	 properties:
-	   spec:
-	     required: ["type","cloud"]
-	       properties:
-	 	    type:
-	 	      type: "string"
-	 		 minimum: 1
-	 	    cloud:
-	 		 type: "string"
-	 		 minimum: 1
+      properties:
+        spec:
+         required: ["type","cloud"]
+         properties:
+           type:
+              type: "string"
+              minimum: 1
+           cloud:
+              type: "string"
+              minimum: 1
