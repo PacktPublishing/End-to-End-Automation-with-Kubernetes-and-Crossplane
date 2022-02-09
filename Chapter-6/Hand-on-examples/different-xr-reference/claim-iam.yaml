@@ -1,0 +1,11 @@
+apiVersion: differentxr.reference.imarunrk.com/v1
+kind: IAMResourceUser
+metadata:
+  namespace: alpha
+  name: iam-user
+spec:
+  compositionRef:
+    name: resource-iam
+  parameters:
+    resorceName: test-reference-bucket-arun
+    resorceType: bucket

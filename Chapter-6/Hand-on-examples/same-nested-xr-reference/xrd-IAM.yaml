@@ -35,5 +35,6 @@ spec:
                 required:
                   - resorceName
                   - resorceType
+                  - policyARN
             required:
               - parameters

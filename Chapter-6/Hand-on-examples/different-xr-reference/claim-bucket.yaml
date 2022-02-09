@@ -1,0 +1,10 @@
+apiVersion: differentxr.reference.imarunrk.com/v1
+kind: MyBucket
+metadata:
+  namespace: alpha
+  name: my-bucket
+spec:
+  compositionRef:
+    name: my-bucket
+  parameters:
+    bucketName: test-reference-bucket-arun

@@ -1,0 +1,78 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: my-bucket
+spec:
+  compositeTypeRef:
+    apiVersion: differentxr.reference.imarunrk.com/v1
+    kind: XMyBucket
+  resources:
+  # Create the bucket resource
+  - base:
+      apiVersion: s3.aws.crossplane.io/v1beta1
+      kind: Bucket
+      spec:
+        providerConfigRef:
+          name: aws-credentials
+        forProvider:
+          acl: private
+          locationConstraint: ap-south-1
+    patches:
+    # patch the name of the bucket
+    - fromFieldPath: spec.parameters.bucketName
+      toFieldPath: metadata.name
+  # Define IAM policy resource for the bucket
+  # Naming pattern: <IAM Resource Type>-<Parent Resource Type>-<Parent Resource name>
+  - base:
+      apiVersion: iam.aws.crossplane.io/v1beta1
+      kind: Policy
+      metadata:
+        labels:
+          resorceType: bucket
+      spec:
+        providerConfigRef:
+          name: aws-credentials
+        forProvider:
+          path: "/"
+    patches:
+    # patch the MR name with the bucket name with prefix
+    - fromFieldPath: spec.parameters.bucketName
+      toFieldPath: metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: "policy-bucket-%s"
+    # patch the policy name with the bucket name with prefix
+    - fromFieldPath: spec.parameters.bucketName
+      toFieldPath: spec.forProvider.name
+      transforms:
+      - type: string
+        string:
+          fmt: "policy-bucket-%s"
+    # patch labels
+    - fromFieldPath: spec.parameters.bucketName
+      toFieldPath: metadata.labels[resorceName]
+    # Patch the policy Json
+    # Full access policy for specific S3 resource 
+    - type: CombineFromComposite
+      toFieldPath: spec.forProvider.document
+      combine:
+        variables:
+        - fromFieldPath: spec.parameters.bucketName
+        - fromFieldPath: spec.parameters.bucketName
+        strategy: string
+        string:
+          fmt: |
+            {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [ "s3:*" ],
+                  "Resource": [
+                    "arn:aws:s3:::%s",
+                    "arn:aws:s3:::%s/*"
+                  ]
+                }
+              ]
+            }
