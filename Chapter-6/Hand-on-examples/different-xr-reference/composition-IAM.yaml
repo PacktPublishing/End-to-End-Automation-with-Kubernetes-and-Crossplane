@@ -42,6 +42,12 @@ spec:
           policyArnSelector:
             matchControllerRef: false
     patches:
+    # Patch the policy ARN lable 1
+    - toFieldPath: spec.forProvider.policyArnSelector.matchLabels.resorceName
+      fromFieldPath: spec.parameters.resorceName
+    # Patch the policy ARN lable 2
+    - toFieldPath: spec.forProvider.policyArnSelector.matchLabels.resorceType
+      fromFieldPath: spec.parameters.resorceType
     # Patch the policy resource name with standerd name construction
     # <Resource Type>-<Parent Resource Type>-<Parent Resource name>
     - type: CombineFromComposite
@@ -52,10 +58,4 @@ spec:
         - fromFieldPath: spec.parameters.resorceName
         strategy: string
         string:
-          fmt: "policy-attachement-%s-%s"
-    # Patch the policy ARN lable 1
-    - toFieldPath: spec.forProvider.policyArnSelector.matchLabels.resorceName
-      fromFieldPath: spec.parameters.resorceName
-    # Patch the policy ARN lable 1
-    - toFieldPath: spec.forProvider.policyArnSelector.matchLabels.resorceType
-      fromFieldPath: spec.parameters.resorceType
+          fmt: "policy-attachement-%s-%s"   

@@ -1,0 +1,13 @@
+apiVersion: container.gcp.crossplane.io/v1beta2
+kind: Cluster
+metadata:
+  name: gke-for-helm-deployment
+spec:
+  providerConfigRef:
+    name: gcp-credentials-project-1
+  writeConnectionSecretToRef:
+    namespace: crossplane-system
+    name: secret-gke-for-helm-deployment
+  forProvider:
+    location: us-central1
+    

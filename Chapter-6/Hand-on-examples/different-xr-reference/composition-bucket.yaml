@@ -27,6 +27,7 @@ spec:
       apiVersion: iam.aws.crossplane.io/v1beta1
       kind: Policy
       metadata:
+        # Add labels one as the resource type
         labels:
           resorceType: bucket
       spec:
@@ -35,6 +36,9 @@ spec:
         forProvider:
           path: "/"
     patches:
+    # patch labels two from the resource name
+    - fromFieldPath: spec.parameters.bucketName
+      toFieldPath: metadata.labels[resorceName]
     # patch the MR name with the bucket name with prefix
     - fromFieldPath: spec.parameters.bucketName
       toFieldPath: metadata.name
@@ -49,9 +53,6 @@ spec:
       - type: string
         string:
           fmt: "policy-bucket-%s"
-    # patch labels
-    - fromFieldPath: spec.parameters.bucketName
-      toFieldPath: metadata.labels[resorceName]
     # Patch the policy Json
     # Full access policy for specific S3 resource 
     - type: CombineFromComposite

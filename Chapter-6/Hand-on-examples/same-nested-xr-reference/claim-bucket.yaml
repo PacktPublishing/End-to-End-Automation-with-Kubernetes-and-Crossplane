@@ -1,5 +1,5 @@
 apiVersion: reference.imarunrk.com/v1
-kind: MyBuckets
+kind: MyBucket
 metadata:
   namespace: alpha
   name: my-bucket
