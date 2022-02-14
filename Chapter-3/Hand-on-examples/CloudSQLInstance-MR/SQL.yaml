@@ -1,7 +1,7 @@
 apiVersion: database.gcp.crossplane.io/v1beta1
 kind: CloudSQLInstance
 metadata:
-  name: db-gcp
+  name: db-gcp-test
 spec:
   providerConfigRef:
     name: gcp-credentials-project-1
