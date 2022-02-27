@@ -1,0 +1,9 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: aws-bucket
+spec:
+  package: arunramakani/aws-bucket:v0.7.0
+  packagePullPolicy: IfNotPresent
+  revisionActivationPolicy: Manual
+  revisionHistoryLimit: 3
