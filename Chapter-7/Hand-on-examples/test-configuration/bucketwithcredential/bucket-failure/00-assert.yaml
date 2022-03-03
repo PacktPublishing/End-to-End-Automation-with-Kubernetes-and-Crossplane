@@ -1,0 +1,16 @@
+apiVersion: kuttl.dev/v1beta1
+kind: TestAssert
+timeout: 20
+---
+apiVersion: s3.aws.crossplane.io/v1beta1
+kind: Bucket
+metadata:
+  name: bucket-arun1
+spec:
+  forProvider:
+    acl: private
+    locationConstraint: ap-south-1
+    tagging:
+      tagSet:
+      - key: ConfigurationVersion
+        value: 1.1.0

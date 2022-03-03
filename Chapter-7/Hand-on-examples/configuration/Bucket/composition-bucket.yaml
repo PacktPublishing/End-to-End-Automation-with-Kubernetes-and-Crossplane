@@ -20,7 +20,7 @@ spec:
           tagging:
             tagSet:
             - key: ConfigurationVersion
-              value: 0.7.0
+              value: 1.1.0
     patches:
     # patch the name of the bucket
     - fromFieldPath: spec.parameters.bucketName
