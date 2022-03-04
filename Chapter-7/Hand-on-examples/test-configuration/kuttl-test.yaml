@@ -1,11 +1,12 @@
-
 apiVersion: kuttl.dev/v1beta1
 kind: TestSuite
+# Information on k8s cluster to use for testing
 startKIND: false
-testDirs:
-- ./bucketwithcredential
 kindContext: gke_crossplane-339717_us-central1_autopilot-cluster-1
 skipClusterDelete: true
+# Commands to be executed for any initial setup before testing
 commands:
-  # Install ProviderConfig for test.
   - command: kubectl apply -f init/
+# Directory where all our tests are kept 
+testDirs:
+- ./bucketwithcredential

@@ -6,11 +6,3 @@ apiVersion: s3.aws.crossplane.io/v1beta1
 kind: Bucket
 metadata:
   name: test-reference-bucket-arun
-spec:
-  forProvider:
-    acl: private
-    locationConstraint: ap-south-1
-    tagging:
-      tagSet:
-      - key: ConfigurationVersion
-        value: 1.1.0
