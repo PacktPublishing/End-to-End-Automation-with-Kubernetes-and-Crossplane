@@ -23,8 +23,8 @@ spec:
       toFieldPath: metadata.name
       combine:
         variables:
-        - fromFieldPath: spec.parameters.resorceType
-        - fromFieldPath: spec.parameters.resorceName
+        - fromFieldPath: spec.parameters.resourceType
+        - fromFieldPath: spec.parameters.resourceName
         strategy: string
         string:
           fmt: "user-%s-%s"
@@ -46,8 +46,8 @@ spec:
       toFieldPath: metadata.name
       combine:
         variables:
-        - fromFieldPath: spec.parameters.resorceType
-        - fromFieldPath: spec.parameters.resorceName
+        - fromFieldPath: spec.parameters.resourceType
+        - fromFieldPath: spec.parameters.resourceName
         strategy: string
         string:
           fmt: "policy-attachement-%s-%s"
@@ -71,8 +71,8 @@ spec:
       toFieldPath: metadata.name
       combine:
         variables:
-        - fromFieldPath: spec.parameters.resorceType
-        - fromFieldPath: spec.parameters.resorceName
+        - fromFieldPath: spec.parameters.resourceType
+        - fromFieldPath: spec.parameters.resourceName
         strategy: string
         string:
           fmt: "iam-access-%s-%s"
@@ -84,8 +84,8 @@ spec:
       toFieldPath: spec.writeConnectionSecretToRef.name
       combine:
         variables:
-        - fromFieldPath: spec.parameters.resorceType
-        - fromFieldPath: spec.parameters.resorceName
+        - fromFieldPath: spec.parameters.resourceType
+        - fromFieldPath: spec.parameters.resourceName
         strategy: string
         string:
           fmt: "credentials-%s-%s"

@@ -26,14 +26,14 @@ spec:
               parameters:
                 type: object
                 properties:
-                  resorceName:
-                    description: The name that is used for IAM user creation. User the same name as resource name for resorce policy lookup to work.
+                  resourceName:
+                    description: The name that is used for IAM user creation. User the same name as resource name for resource policy lookup to work.
                     type: string
-                  resorceType:
+                  resourceType:
                     description: A string used as a part of prefix in IAM creation. 
                     type: string
                 required:
-                  - resorceName
-                  - resorceType
+                  - resourceName
+                  - resourceType
             required:
               - parameters

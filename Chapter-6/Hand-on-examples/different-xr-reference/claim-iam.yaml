@@ -7,5 +7,5 @@ spec:
   compositionRef:
     name: resource-iam
   parameters:
-    resorceName: test-reference-bucket-arun
-    resorceType: bucket
+    resourceName: test-reference-bucket-arun
+    resourceType: bucket

@@ -29,7 +29,7 @@ spec:
       metadata:
         # Add labels one as the resource type
         labels:
-          resorceType: bucket
+          resourceType: bucket
       spec:
         providerConfigRef:
           name: aws-credentials
@@ -38,7 +38,7 @@ spec:
     patches:
     # patch labels two from the resource name
     - fromFieldPath: spec.parameters.bucketName
-      toFieldPath: metadata.labels[resorceName]
+      toFieldPath: metadata.labels[resourceName]
     # patch the MR name with the bucket name with prefix
     - fromFieldPath: spec.parameters.bucketName
       toFieldPath: metadata.name

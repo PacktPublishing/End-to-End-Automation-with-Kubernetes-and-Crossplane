@@ -92,7 +92,7 @@ spec:
     - type: ToCompositeFieldPath
       fromFieldPath: status.atProvider.arn
       toFieldPath: status.policyARN
-  # XR resorce to create IAM resource and attach policy
+  # XR resource to create IAM resource and attach policy
   - base:
       apiVersion: reference.imarunrk.com/v1
       kind: XIAMWithCredential
@@ -102,11 +102,11 @@ spec:
         parameters:
           # Pass <Parent Resource Type> as input parameter 
           # IAM XR will use this as a part of prefix
-          resorceType: bucket
+          resourceType: bucket
     patches:
     # patch the bucket name for the IAM user name prefix
     - fromFieldPath: spec.parameters.bucketName
-      toFieldPath: spec.parameters.resorceName
+      toFieldPath: spec.parameters.resourceName
     # patch the policy arn to attach the resource policy with IAM user
     - fromFieldPath: status.policyARN
       toFieldPath: spec.parameters.policyARN
