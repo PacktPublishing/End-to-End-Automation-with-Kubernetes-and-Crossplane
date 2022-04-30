@@ -1,0 +1,11 @@
+apiVersion: learn.unified.devops/v1alpha1
+kind: WebApplication
+metadata:
+  name: micro-frontend-one
+  namespace: product-a
+spec:
+  compositionRef:
+    name: web-application-dev
+  parameters:
+    productGitGroup: unified-devops-project-x
+    databaseSize: SMALL

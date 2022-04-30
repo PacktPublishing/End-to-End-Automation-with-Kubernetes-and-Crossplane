@@ -1,0 +1,113 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: web-application-dev
+spec:
+  compositeTypeRef:
+    apiVersion: learn.unified.devops/v1alpha1
+    kind: XWebApplication
+  resources:
+  - name: application-namespace
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: Object
+      spec:
+        forProvider:
+          manifest:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: # to be patched
+    patches:
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.providerConfigRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-cluster-k8s-provider-config"
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.forProvider.manifest.metadata.name
+  - name: argocd-application-gitops
+    base:
+      apiVersion: kubernetes.crossplane.io/v1alpha1
+      kind: Object
+      spec:
+        forProvider:
+          manifest:
+            apiVersion: argoproj.io/v1alpha1
+            kind: Application
+            metadata:
+              name: # to be patched
+              namespace: argocd
+            spec:
+              project: default
+              source:
+                repoURL: # to be patched
+                targetRevision: HEAD
+                path: template-helm
+                helm:
+                  releaseName: # To be patched
+                  parameters:
+                  - name: "image.repository"
+                    value: # To be patched
+                  - name: "image.tag"
+                    value: latest
+                  - name: "service.port"
+                    value: "3000"
+              destination:
+                server: https://kubernetes.default.svc
+                namespace: # to be patched
+              syncPolicy:
+                automated:
+                  prune: true
+                  selfHeal: true
+                syncOptions:
+                - CreateNamespace=true
+    patches:
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.providerConfigRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-cluster-k8s-provider-config"
+    - fromFieldPath: spec.claimRef.name
+      toFieldPath: spec.forProvider.manifest.metadata.name
+      transforms:
+      - type: string
+        string:
+          fmt: "%s-argo"
+    - type: CombineFromComposite
+      toFieldPath: spec.forProvider.manifest.spec.source.repoURL
+      combine:
+        variables:
+        - fromFieldPath: spec.parameters.productGitGroup
+        - fromFieldPath: spec.claimRef.name
+        strategy: string
+        string:
+          fmt: "https://gitlab.com/%s/%s.git"
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.forProvider.manifest.spec.destination.namespace
+    - fromFieldPath: spec.claimRef.name
+      toFieldPath: spec.forProvider.manifest.spec.source.helm.releaseName
+    - fromFieldPath: spec.claimRef.name
+      toFieldPath: spec.forProvider.manifest.spec.source.helm.parameters[0].value
+      transforms:
+      - type: string
+        string:
+          fmt: "arunramakani/%s"
+  - name: db
+    base:
+      apiVersion: learn.unified.devops/v1alpha1
+      kind: XGCPdb
+      spec:
+        parameters:
+          size: BIG
+          product: default
+          application: default
+    patches:
+    - fromFieldPath: spec.claimRef.namespace
+      toFieldPath: spec.parameters.product
+    - fromFieldPath: spec.parameters.size
+      toFieldPath: spec.parameters.size
+    - fromFieldPath: spec.claimRef.name
+      toFieldPath: spec.parameters.application
