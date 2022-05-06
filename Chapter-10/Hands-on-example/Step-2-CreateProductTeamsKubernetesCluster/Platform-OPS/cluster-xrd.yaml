@@ -28,7 +28,7 @@ spec:
                     description: number of nodes in the cluster 
                     type: integer
                   size:
-                    description: type of the database required 
+                    description: type of the machine type 
                     type: string
                     enum:
                     - BIG
