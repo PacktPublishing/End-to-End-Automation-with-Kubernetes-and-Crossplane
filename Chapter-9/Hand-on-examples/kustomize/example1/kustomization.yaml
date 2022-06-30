@@ -1,5 +1,0 @@
-resources:
-- deployment.yaml
-commonLabels:
-    team-name: alpha
-namespace: test

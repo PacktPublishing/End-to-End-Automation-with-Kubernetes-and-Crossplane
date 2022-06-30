@@ -1,4 +1,0 @@
-resources:
-- composition.yaml
-commonLabels:
-    team-name: alpha
