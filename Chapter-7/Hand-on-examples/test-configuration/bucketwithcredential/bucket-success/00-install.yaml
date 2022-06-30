@@ -1,9 +1,0 @@
-apiVersion: reference.imarunrk.com/v1
-kind: BucketWithCredential
-metadata:
-  name: iam-bucket
-spec:
-  compositionRef:
-    name: bucket-with-credentials
-  parameters:
-    bucketName: test-reference-bucket-arun
