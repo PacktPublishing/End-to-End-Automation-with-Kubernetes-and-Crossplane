@@ -1,0 +1,48 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: crossplane-system
+  name: prometheus-view
+subjects:
+- kind: ServiceAccount
+  namespace: monitoring
+  name: prometheus-k8s
+roleRef:
+  kind: ClusterRole
+  name: view
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  namespace: crossplane-system
+  name: crossplane-providers
+spec:
+  namespaceSelector:
+    matchNames:
+      - crossplane-system
+  selector:
+    matchExpressions:
+      - key: crossplane.io/provider
+        operator: Exists
+  podMetricsEndpoints:
+    - port: metrics
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  namespace: crossplane-system
+  name: crossplane
+spec:
+  namespaceSelector:
+    matchNames:
+      - crossplane-system
+  selector:
+    matchExpressions:
+      - key: app
+        operator: In
+        values:
+          - crossplane
+  podMetricsEndpoints:
+    - port: metrics
