@@ -1,0 +1,44 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: gcp-kubernetes
+spec:
+  compositeTypeRef:
+    apiVersion: nested-xr.imarunrk.com/v1
+    kind: XGCPCluster
+  resources:
+  - name: cluster
+    base:
+      apiVersion: container.gcp.crossplane.io/v1beta2
+      kind: Cluster
+      spec:
+        providerConfigRef:
+          name: gcp-credentials-project-1
+        forProvider:
+          location: us-central1
+          autopilot:
+            enabled: true
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.autopilot
+      toFieldPath: spec.forProvider.autopilot.enabled
+    - type: PatchSet
+      patchSetName: region
+  - name: bucket
+    base:
+      apiVersion: storage.gcp.crossplane.io/v1alpha3
+      kind: Bucket
+      spec:
+        providerConfigRef:
+          name: gcp-credentials-project-1
+        forProvider:
+          location: us-central1
+    patches:
+    - type: PatchSet
+      patchSetName: region
+  patchSets:
+  - name: region
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.region
+      toFieldPath: spec.forProvider.region

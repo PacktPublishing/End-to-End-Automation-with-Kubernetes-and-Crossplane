@@ -1,0 +1,11 @@
+apiVersion: composition-revision.imarunrk.com/v1
+kind: MySql
+metadata:
+  namespace: alpha
+  name: mysql-db-manual
+spec:
+  compositionUpdatePolicy: Manual
+  compositionRef:
+    name: gcp-mysql
+  parameters:
+    size: 10

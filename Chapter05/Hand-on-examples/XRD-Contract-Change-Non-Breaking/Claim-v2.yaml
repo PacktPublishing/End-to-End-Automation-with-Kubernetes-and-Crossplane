@@ -1,0 +1,11 @@
+apiVersion: xrd-non-breaking.imarunrk.com/v1
+kind: MySql
+metadata:
+  namespace: alpha
+  name: mysql-db-v2
+spec:
+  compositionRef:
+    name: gcp-mysql
+  parameters:
+    size: 10
+    vm: db-n1-standard-2

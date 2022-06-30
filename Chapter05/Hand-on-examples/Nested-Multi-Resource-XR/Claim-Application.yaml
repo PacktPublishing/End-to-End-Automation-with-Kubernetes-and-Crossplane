@@ -1,0 +1,8 @@
+apiVersion: nested-xr.imarunrk.com/v1
+kind: Application
+metadata:
+  name: my-application
+  namespace: alpha
+spec:
+  parameters:
+    region: us-central1

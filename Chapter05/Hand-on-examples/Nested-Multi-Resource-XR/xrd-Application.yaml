@@ -1,0 +1,32 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xapplications.nested-xr.imarunrk.com
+spec:
+  group: nested-xr.imarunrk.com
+  names:
+    kind: XApplication
+    plural: xapplications
+  claimNames:
+    kind: Application
+    plural: applications
+  versions:
+  - name: v1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  region:
+                    type: string
+                required:
+                - region
+            required:
+            - parameters
