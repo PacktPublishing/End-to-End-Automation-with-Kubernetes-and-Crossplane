@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: sql-alerts
+  namespace: crossplane-system
+  labels:
+    app.kubernetes.io/part-of: crossplane
+spec:
+  groups:
+  - name: Crossplane
+    rules:
+    - alert: ReconciliationFailure
+      expr: sum_over_time(controller_runtime_reconcile_errors_total{namespace="crossplane-system", controller="managed/cloudsqlinstance.database.gcp.crossplane.io"}[5m]) > 20
+      for: 5m
+      labels:
+        severity: page
+      annotations:
+        summary: '{{ $labels.controller }} reconciliation has been failing for more than 20 time in the last 5 minutes.'

@@ -1,0 +1,13 @@
+apiVersion: helm.crossplane.io/v1beta1
+kind: Release
+metadata:
+  name: helm-crossplane-example
+spec:
+  providerConfigRef:
+    name: helm-provider
+  forProvider:
+    chart:
+      name: hello
+      repository: https://www.kleinloog.ch/hello-helm/
+      version: 0.4.0-rc2
+    namespace: default
