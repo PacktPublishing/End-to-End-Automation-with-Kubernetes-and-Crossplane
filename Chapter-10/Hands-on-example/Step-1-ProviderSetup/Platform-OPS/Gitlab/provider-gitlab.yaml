@@ -1,6 +1,0 @@
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-gitlab
-spec:
-  package: crossplane/provider-gitlab:v0.2.0
