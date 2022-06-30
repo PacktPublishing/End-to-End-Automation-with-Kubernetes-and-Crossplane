@@ -1,0 +1,12 @@
+apiVersion: gcp.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: gcp-credentials-project-1 
+spec:
+  projectID: crossplane-339717
+  credentials:
+    source: Secret
+    secretRef:
+      namespace: crossplane-system
+      name: gcp-account
+      key: service-account

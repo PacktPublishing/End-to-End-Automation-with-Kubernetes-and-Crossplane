@@ -1,0 +1,7 @@
+apiVersion: "book.imarunrk.com/v1"
+kind: "CloudDB"
+metadata:
+  name: "aws_RDS"
+spec:
+  type: "sql"
+  cloud : "aws"
