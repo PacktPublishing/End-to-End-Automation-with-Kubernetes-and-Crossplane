@@ -1,0 +1,10 @@
+apiVersion: meta.pkg.crossplane.io/v1
+kind: Configuration
+metadata:
+  name: aws-bucket
+spec:
+  crossplane:
+    version: ">=v1.6.0"
+  dependsOn:
+    - provider: crossplane/provider-aws
+      version: ">=v0.23.0"
