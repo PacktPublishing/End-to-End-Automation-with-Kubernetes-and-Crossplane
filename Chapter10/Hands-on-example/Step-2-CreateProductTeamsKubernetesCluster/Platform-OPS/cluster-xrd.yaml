@@ -1,0 +1,40 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xgcpclusters.learn.unified.devops
+spec:
+  group: learn.unified.devops
+  names:
+    kind: XGCPCluster
+    plural: xgcpclusters
+  claimNames:
+    kind: GCPCluster
+    plural: gcpclusters
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  nodeCount:
+                    description: number of nodes in the cluster 
+                    type: integer
+                  size:
+                    description: type of the machine type 
+                    type: string
+                    enum:
+                    - BIG
+                    - SMALL
+                required:
+                - nodeCount
+                - size
+            required:
+            - parameters

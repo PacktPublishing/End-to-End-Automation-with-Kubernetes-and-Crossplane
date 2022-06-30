@@ -1,0 +1,55 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: mysql
+spec:
+  compositeTypeRef:
+    apiVersion: learn.unified.devops/v1alpha1
+    kind: XGCPdb
+  resources:
+  - name: cloudsqlinstance
+    base:
+      apiVersion: database.gcp.crossplane.io/v1beta1
+      kind: CloudSQLInstance
+      spec:
+        forProvider:
+          databaseVersion: MYSQL_5_7
+          region: us-central1
+          settings:
+            tier: db-g1-small
+            dataDiskSizeGb: 20
+    patches:
+    - fromFieldPath: spec.parameters.application
+      toFieldPath: metadata.name
+    - fromFieldPath: spec.parameters.product
+      toFieldPath: spec.providerConfigRef.name
+    - fromFieldPath: spec.parameters.product
+      toFieldPath: spec.writeConnectionSecretToRef.namespace
+    - fromFieldPath: spec.parameters.application
+      toFieldPath: spec.writeConnectionSecretToRef.name
+      transforms:
+        - type: string
+          string:
+            fmt: "%s-db-secret"
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.size
+      toFieldPath: spec.forProvider.settings.tier
+      transforms:
+      - type: map
+        map:
+          BIG: db-n1-standard-1
+          SMALL: db-g1-small
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.size
+      toFieldPath: spec.forProvider.settings.dataDiskSizeGb
+      transforms:
+      - type: map
+        map:
+          BIG: "40"
+          SMALL: "20"
+      - type: convert
+        convert:
+          toType: int
+    connectionDetails:
+    - name: hostname
+      fromConnectionSecretKey: hostname

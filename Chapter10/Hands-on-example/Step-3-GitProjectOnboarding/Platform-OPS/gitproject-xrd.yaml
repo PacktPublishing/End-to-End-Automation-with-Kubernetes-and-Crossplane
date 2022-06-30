@@ -1,0 +1,51 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xgitprojects.learn.unified.devops
+spec:
+  group: learn.unified.devops
+  names:
+    kind: XGitProject
+    plural: xgitprojects
+  claimNames:
+    kind: GitProject
+    plural: gitprojects
+  connectionSecretKeys:
+    - gitlabToken
+    - gitlabProjectURL
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  template:
+                    description: Name of the product to pick correct template repo
+                    type: string
+                    enum:
+                    - react-web
+                    - node-backend
+                    - spring-boot-web
+                    - spring-boot-api
+                  gitlabGroupID:
+                    description: the gitlab group under which new project repo should be created 
+                    type: integer
+                required:
+                - template
+                - gitlabGroupID
+            required:
+            - parameters
+          status:
+            type: object
+            properties:
+              projectRepo:
+                description: Address of the newly created react GitLab project.
+                type: string

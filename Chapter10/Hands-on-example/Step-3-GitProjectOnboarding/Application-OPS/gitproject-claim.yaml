@@ -1,0 +1,11 @@
+apiVersion: learn.unified.devops/v1alpha1
+kind: GitProject
+metadata:
+  name: micro-frontend-one
+  namespace: product-a
+spec:
+  compositionRef:
+    name: gitprojects-composition
+  parameters:
+    template: react-web
+    gitlabGroupID: 52372004

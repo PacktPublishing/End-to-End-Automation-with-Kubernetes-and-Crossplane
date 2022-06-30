@@ -1,0 +1,11 @@
+apiVersion: learn.unified.devops/v1alpha1
+kind: GCPCluster
+metadata:
+  name: product-a-cluster
+  namespace: product-a
+spec:
+  compositionRef:
+    name: xcluster-dev
+  parameters:
+    nodeCount: 5
+    size: BIG
