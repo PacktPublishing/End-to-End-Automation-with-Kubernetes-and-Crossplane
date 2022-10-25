@@ -77,3 +77,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 is a passionate distributed platform development and a technology blogging expert living in Dubai, a dynamic city where many cultures meet. He is currently working as a Technology Architect at PwC, specializing in Evolutionary Architecture Practices, Kubernetes DevOps, Cloud-Native Apps, and Microservices. He has over a decade of experience working in a variety of different technology, domain, and teams. He has been part of many digital transformation journeys in the last few years. This book is an inspiration from one of his recent works. He is enthusiastic about learning in public and committed to helping individuals in their cloud-native learning journey.
 
 
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781801811545">https://packt.link/free-ebook/9781801811545 </a> </p>
