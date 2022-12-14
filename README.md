@@ -1,3 +1,15 @@
+
+### Get this product for $5
+
+<i>Packt is having its biggest sale of the year. Get this eBook or any other book, video, or course that you like just for $5 each</i>
+
+
+<b><p align='center'>[Buy now](https://packt.link/9781801811545)</p></b>
+
+
+<b><p align='center'>[Buy similar titles for just $5](https://subscription.packtpub.com/search)</p></b>
+
+
 # End to End Automation with Kubernetes and Crossplane
 <a href="https://www.packtpub.com/cloud-networking/end-to-end-automation-with-kubernetes-and-crossplane?utm_source=github&utm_medium=repository&utm_campaign=9781801811545"><img src="https://static.packt-cdn.com/products/9781801811545/cover/smaller" alt="Early Access" height="256px" align="right"></a>
 
